@@ -21,4 +21,26 @@ func main() {
 
 	fmt.Println(v)
 
+	//////////////////////
+	jobCh := make(chan int, 10)
+	resultCh := make(chan int, 10)
+
+	for i := range 10 {
+		jobCh <- i + 1
+	}
+	close(jobCh)
+
+	go powerTwo(jobCh, resultCh)
+
+	for range 10 { // range resultCh ไม่ได้เพราะ five มารับคัวแปรใน resultCh ไป
+		five := <-resultCh
+		fmt.Println(five)
+	}
+
+}
+
+func powerTwo(jobCh <-chan int, resultCh chan<- int) {
+	for i := range jobCh {
+		resultCh <- i * 2
+	}
 }
