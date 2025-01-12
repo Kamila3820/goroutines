@@ -27,15 +27,13 @@ func main() {
 				closeChannel1 = true
 				continue
 			}
-			fmt.Println(v)
+			fmt.Println("Channel 1:", v)
 		case v, ok := <-channel2:
 			if !ok {
 				closeChannel2 = true
 				continue
 			}
-			fmt.Println(v)
-		default:
-			fmt.Println("No message received")
+			fmt.Println("Channel 2:", v)
 		}
 
 	}
